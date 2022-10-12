@@ -97,6 +97,8 @@ main {
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
+  padding: 0 50px;
+  margin: 20px 0;
 }
 
 .category button {

@@ -4,7 +4,8 @@ import "./App.css";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
 import List from "./pages/List";
-import React, { useReducer } from "react";
+import dummy from "./util/dummy";
+import React, { useEffect, useReducer } from "react";
 
 const accountReducer = (account, action) => {
   return {
@@ -15,7 +16,31 @@ const accountReducer = (account, action) => {
 };
 
 const listReducer = (list, action) => {
-  let newList = {};
+  let newList = [];
+  console.log(action.data);
+  switch (action.type) {
+    case "INIT": {
+      newList = [...action.data];
+      break;
+    }
+    case "CREATE": {
+      newList = [action.data, ...list];
+      break;
+    }
+    case "EDIT": {
+      newList = list.map((it) =>
+        action.targetId === it.id ? action.data : it
+      );
+      break;
+    }
+    case "REMOVE": {
+      newList = list.filter((it) => action.targetId !== it.id);
+      break;
+    }
+    default: {
+      return list;
+    }
+  }
   return newList;
 };
 
@@ -32,7 +57,11 @@ function App() {
   });
 
   /** 내역리스트 저장하는 state */
-  const [list, listDispatch] = useReducer(listReducer, {});
+  const [list, listDispatch] = useReducer(listReducer, []);
+
+  useEffect(() => {
+    listDispatch({ type: "INIT", data: dummy });
+  }, []);
 
   return (
     <DataContext.Provider>

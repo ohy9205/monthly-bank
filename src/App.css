@@ -1,38 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff8dd;
+  font-family: "Inter";
+  font-weight: 400;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  width: 500px;
   min-height: 100vh;
+  margin: 50px auto;
+
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 4px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* main-header */
+
+.main-header {
+  height: 150px;
+  padding: 0 50px;
+  border-radius: 10px 10px 0 0;
+  background-color: #ffc700;
+
+  display: flex;
+  align-items: center;
+
+  color: #fff;
+}
+
+.main-header .left-col {
+  width: 50%;
+  height: 60px;
+
   display: flex;
   flex-direction: column;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.main-header .left-col h1 {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+
+.main-header .left-col p {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.main-header .right-col {
+  width: 50%;
+  height: 60px;
+  padding-left: 50px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-header .right-col h2 {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.main-header .right-col p {
+  font-size: 17px;
+}
+
+.main-header .right-col .total-money {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 22px;
+}
+.main-header .right-col .total-money h2 {
+  margin-right: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+/* main */
+main {
+  padding: 0 50px;
+  margin: 20px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* category */
+.category {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.category button {
+  width: 175px;
+  height: 40px;
+  padding: 0 20px;
+  background-color: #595959;
+
+  border: none;
+  border-radius: 5px;
+
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* list-wrapper - filtering */
+.list-wrapper header {
+  height: 40px;
+  margin-bottom: 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #595959;
+}
+
+.list-wrapper header h1 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.list-wrapper header .filter {
+  display: flex;
+}
+
+.list-wrapper header input {
+  display: none;
+}
+
+.list-wrapper header label {
+  font-size: 13px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.list-wrapper header input[type="radio"]:checked + label::before {
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  border: none;
+}
+
+.list-wrapper header label::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border: 1px solid #595959;
+  border-radius: 50%;
+  margin-right: 3px;
+  box-sizing: border-box;
+}
+
+/* list-wrapper - items */
+.list-wrapper article {
+  margin-bottom: 30px;
+}
+
+.list-wrapper article h1 {
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 7px;
+}
+
+.list-wrapper article ul {
+}
+
+.list-wrapper article li {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.12);
+  margin-bottom: 7px;
+}
+
+.list-wrapper article li dt {
+  width: 45%;
+  font-size: 15px;
+}
+
+.list-wrapper article li dd {
+  width: 45%;
+  text-align: right;
+  padding-right: 15px;
+
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+}
+
+.list-wrapper article li.income dd {
+  color: #4781ff;
+}
+
+.list-wrapper article li.expenses dd {
+  color: #ff4747;
+}
+
+.list-wrapper article li button {
+  background-color: transparent;
+
+  font-size: 10px;
+  border: none;
+}
+
+.list-wrapper article li button .del-btn {
+  width: 20px;
+  height: 20px;
+  color: #595959;
+}
+
+/* aside */
+aside {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+aside button {
+  background-color: transparent;
+  border: none;
+  bottom: 20px;
+  right: 20px;
+}
+
+aside button .add-btn {
+  width: 45px;
+  height: 45px;
+  color: #ffc700;
 }

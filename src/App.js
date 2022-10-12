@@ -4,7 +4,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
 import List from "./pages/List";
-import { useReducer } from "react";
+import React, { useReducer } from "react";
 
 const accountReducer = (account, action) => {
   return {
@@ -19,6 +19,10 @@ const listReducer = (list, action) => {
   return newList;
 };
 
+/** context 생성 */
+export const DataContext = React.createContext();
+export const DispatchContext = React.createContext();
+
 function App() {
   /** 돈정보를 저장하는 state */
   const [account, accountDispatch] = useReducer(accountReducer, {
@@ -31,11 +35,15 @@ function App() {
   const [list, listDispatch] = useReducer(listReducer, {});
 
   return (
-    <div className="App">
-      <Header />
-      <Nav />
-      <List />
-    </div>
+    <DataContext.Provider>
+      <DispatchContext.Provider>
+        <div className="App">
+          <Header />
+          <Nav />
+          <List />
+        </div>
+      </DispatchContext.Provider>
+    </DataContext.Provider>
   );
 }
 

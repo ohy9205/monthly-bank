@@ -1,32 +1,37 @@
 const dummy = [
   {
+    id: 1,
     type: "income",
     name: "월급",
-    date: 1669042800003,
+    date: 1665575724298,
     money: 100000,
   },
   {
+    id: 2,
     type: "expenses",
     name: "저녁1",
-    date: 1669042800002,
+    date: 1665575724299,
     money: 10000,
   },
   {
+    id: 3,
     type: "expenses",
     name: "점심",
-    date: 1669042800001,
+    date: 1666364400000,
     money: 10000,
   },
   {
+    id: 4,
     type: "expenses",
     name: "리액트 인강",
-    date: 1668870000000,
+    date: 1666364400001,
     money: 10000,
   },
   {
+    id: 5,
     type: "income",
     name: "월급",
-    date: 1668870000001,
+    date: 1666364400002,
     money: 50000,
   },
 ];

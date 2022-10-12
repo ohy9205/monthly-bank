@@ -13,6 +13,10 @@ body {
   font-weight: 400;
 }
 
+button {
+  cursor: pointer;
+}
+
 .App {
   width: 500px;
   min-height: 100vh;
@@ -27,18 +31,30 @@ body {
 
 .main-header {
   height: 150px;
-  padding: 0 50px;
+  /* padding: 0 50px; */
   border-radius: 10px 10px 0 0;
   background-color: #ffc700;
 
   display: flex;
   align-items: center;
+  text-align: center;
 
   color: #fff;
 }
 
+.main-header button {
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+
+  width: 10%;
+}
+
 .main-header .left-col {
-  width: 50%;
+  /* width: 50%; */
+  width: 40%;
   height: 60px;
 
   display: flex;
@@ -59,13 +75,15 @@ body {
 }
 
 .main-header .right-col {
-  width: 50%;
+  /* width: 50%; */
+  width: 40%;
   height: 60px;
-  padding-left: 50px;
+  /* padding-left: 50px; */
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .main-header .right-col h2 {

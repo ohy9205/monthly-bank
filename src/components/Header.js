@@ -1,4 +1,9 @@
-import { useContext } from "react";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useState } from "react";
 import { DataContext } from "../App";
 
 const Header = () => {
@@ -7,8 +12,14 @@ const Header = () => {
   const income = parseInt(account.income).toLocaleString();
   const expenses = parseInt(account.expenses).toLocaleString();
 
+  /**현재 월 state */
+  const [month, setMonth] = useState();
+
   return (
     <header className="main-header">
+      <button className="left-btn" onClick={""}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </button>
       <div className="left-col">
         <h1>2022-10월 자산현황</h1>
         <p>{total}</p>
@@ -23,6 +34,9 @@ const Header = () => {
           <p>{expenses}</p>
         </div>
       </div>
+      <button className="right-btn">
+        <FontAwesomeIcon icon={faChevronRight} onClick={""} />
+      </button>
     </header>
   );
 };

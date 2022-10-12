@@ -17,7 +17,6 @@ const accountReducer = (account, action) => {
 
 const listReducer = (list, action) => {
   let newList = [];
-  console.log(action.data);
   switch (action.type) {
     case "INIT": {
       newList = [...action.data];
@@ -57,10 +56,23 @@ function App() {
   });
 
   /** 내역리스트 저장하는 state */
-  const [list, listDispatch] = useReducer(listReducer, []);
+  const [list, listDispatch] = useReducer(listReducer, dummy);
 
   useEffect(() => {
-    listDispatch({ type: "INIT", data: dummy });
+    // list가 빈값이 아니면 account 상태 업데이트
+    if (list && list.length > 0) {
+      let total = 0;
+      let income = 0;
+      let expenses = 0;
+
+      for (let item of list) {
+        income += item.type === "income" && item.money;
+        expenses += item.type === "expenses" && item.money;
+      }
+      total = income - expenses;
+      console.log(total, income, expenses);
+      accountDispatch({ total, income, expenses });
+    }
   }, []);
 
   return (

@@ -1,11 +1,19 @@
-import Item from "./Item";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { DataContext } from "../App";
 
-const DayItem = () => {
+const DayItem = ({ id, type, name, date, money }) => {
+  let curDay = new Date(date).getDate();
+
   return (
-    <article>
-      <h1>10월22일 일</h1>
-      <Item />
-    </article>
+    <li className={type}>
+      <dt>{name}</dt>
+      <dd>{type === "income" ? `+${money}` : `-${money}`}</dd>
+      <button>
+        <FontAwesomeIcon className="del-btn" icon={faCircleXmark} />
+      </button>
+    </li>
   );
 };
 export default DayItem;

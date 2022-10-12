@@ -9,7 +9,7 @@ import React, { useEffect, useReducer } from "react";
 
 const accountReducer = (account, action) => {
   return {
-    total: action.income + action.expenses,
+    total: action.income - action.expenses,
     income: action.income,
     expenses: action.expenses,
   };
@@ -70,13 +70,14 @@ function App() {
         expenses += item.type === "expenses" && item.money;
       }
       total = income - expenses;
-      console.log(total, income, expenses);
       accountDispatch({ total, income, expenses });
     }
   }, []);
 
+  const dataValue = { account, list };
+
   return (
-    <DataContext.Provider>
+    <DataContext.Provider value={dataValue}>
       <DispatchContext.Provider>
         <div className="App">
           <Header />

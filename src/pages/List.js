@@ -1,18 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import DayItem from "../components/DayItem";
 import ControlMenu from "../components/ControlMenu";
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../App";
 
 const List = () => {
   const { monthData } = useContext(DataContext);
+  /** 내역 내림차순으로 정렬 */
+  const compare = (a, b) => {
+    return b.date - a.date;
+  };
+  const sortedData = monthData.sort(compare);
 
-  let days = [];
-  for (let i = 0; i < 31; i++) {
-    days[i] = i + 1;
-  }
-  console.log(days);
+  /** 내역 일자 headText 전달 유무를 따지기 위한 변수 */
+  let prevDate = 0;
 
   /** 해당 월 리스트들을 일 단위로 구분 filter?*/
   return (
@@ -23,28 +23,25 @@ const List = () => {
           <h1>월간 내역</h1>
           <ControlMenu />
         </header>
-        <div className="list">
-          <article>
-            <h1>10월22일 일</h1>
-            {monthData.map((it) => {
-              let curDay = new Date(it.date).getDate();
-              const date = new Date(parseInt(it.date));
-              const dateText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+        <article>
+          {sortedData.map((it) => {
+            let date = new Date(parseInt(it.date)); // 내역날짜
+            const headText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+            let isExit = parseInt(date.getDate()) === prevDate;
+            prevDate = parseInt(date.getDate());
+
+            if (isExit) {
+              return <DayItem key={it.id} {...it} />;
+            } else {
               return (
-                <div className="dayItem-wrapper">
-                  {console.log(curDay)}
-                  {/* {curDay === date.getDate() : `<h1>${dateText}</h1>` : ''} */}
-                  {/* <h1>{dateText}</h1> */}
-                  <ul>
-                    <DayItem key={it.id} {...it} />
-                  </ul>
-                </div>
+                <React.Fragment key={it.id}>
+                  <h1>{headText}</h1>
+                  <DayItem key={it.id} headText={headText} {...it} />
+                </React.Fragment>
               );
-            })}
-          </article>
-          {/* </ul> */}
-          {/* </article> */}
-        </div>
+            }
+          })}
+        </article>
       </section>
     </main>
   );

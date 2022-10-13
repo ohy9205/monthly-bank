@@ -1,6 +1,5 @@
 import "./App.css";
 import Header from "./components/Header";
-import Nav from "./components/Nav";
 import List from "./pages/List";
 import dummy from "./util/dummy";
 import React, { useEffect, useReducer, useState } from "react";

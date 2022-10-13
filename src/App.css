@@ -192,12 +192,10 @@ main {
   font-size: 13px;
   font-weight: 400;
   margin-bottom: 7px;
+  margin-top: 25px;
 }
 
-.list-wrapper article ul {
-}
-
-.list-wrapper article li {
+.list-wrapper article dl {
   width: 100%;
   height: 50px;
   padding: 0 20px;
@@ -211,12 +209,16 @@ main {
   margin-bottom: 7px;
 }
 
-.list-wrapper article li dt {
+.list-wrapper article dt {
   width: 45%;
   font-size: 15px;
 }
 
-.list-wrapper article li dd {
+.list-wrapper article dt.itemDate {
+  display: block;
+}
+
+.list-wrapper article dd {
   width: 45%;
   text-align: right;
   padding-right: 15px;
@@ -226,22 +228,22 @@ main {
   letter-spacing: -0.5px;
 }
 
-.list-wrapper article li.income dd {
+.list-wrapper article dl.income dd {
   color: #4781ff;
 }
 
-.list-wrapper article li.expenses dd {
+.list-wrapper article dl.expenses dd {
   color: #ff4747;
 }
 
-.list-wrapper article li button {
+.list-wrapper article dl button {
   background-color: transparent;
 
   font-size: 10px;
   border: none;
 }
 
-.list-wrapper article li button .del-btn {
+.list-wrapper article dl button .del-btn {
   width: 20px;
   height: 20px;
   color: #595959;

@@ -2,7 +2,7 @@ const Button = ({ type, className, text, onClick }) => {
   return (
     <button
       className={`${className}${type ? ` active` : ``}`}
-      onClick={() => onClick}>
+      onClick={onClick}>
       {text}
     </button>
   );

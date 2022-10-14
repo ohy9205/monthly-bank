@@ -151,36 +151,18 @@ main {
   font-weight: 700;
 }
 
+.list-wrapper header .filter-wrapper {
+}
+
 .list-wrapper header .filter {
-  display: flex;
-}
-
-.list-wrapper header input {
-  display: none;
-}
-
-.list-wrapper header label {
-  font-size: 13px;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.list-wrapper header input[type="radio"]:checked + label::before {
-  width: 15px;
-  height: 15px;
-  background-color: orange;
+  background: none;
   border: none;
+  font-size: 15px;
+  padding-left: 20px;
 }
 
-.list-wrapper header label::before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  border: 1px solid #595959;
-  border-radius: 50%;
-  margin-right: 3px;
-  box-sizing: border-box;
+.list-wrapper header .filter-on {
+  font-weight: 900;
 }
 
 /* list-wrapper - items */

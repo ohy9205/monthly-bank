@@ -5,6 +5,7 @@ import dummy from "./util/dummy";
 import React, { useEffect, useReducer, useState } from "react";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Add from "./components/Add";
 
 const listReducer = (list, action) => {
   let newList = [];
@@ -149,6 +150,7 @@ function App() {
               />
             </button>
           </aside>
+          <Add />
         </div>
       </DispatchContext.Provider>
     </DataContext.Provider>

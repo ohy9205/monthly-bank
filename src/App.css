@@ -25,6 +25,8 @@ button {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 5px 4px 20px 0px rgba(0, 0, 0, 0.25);
+
+  position: relative;
 }
 
 /* main-header */
@@ -248,4 +250,71 @@ aside button .add-btn {
   width: 45px;
   height: 45px;
   color: #ffc700;
+}
+
+/* add-wrapper */
+.add-wrapper {
+  width: 100%;
+  height: 370px;
+  background-color: #dedede;
+  padding: 0 50px;
+
+  position: absolute;
+  bottom: 0;
+
+  border-radius: 50px 50px 0 0;
+}
+
+.add-wrapper h1 {
+  font-size: 17px;
+  padding-top: 30px;
+  margin-bottom: 20px;
+}
+
+.add-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-list label {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.add-list input {
+  height: 40px;
+
+  border-radius: 5px;
+  border: none;
+
+  padding: 10px 20px;
+  margin-bottom: 10px;
+
+  font-size: 15px;
+}
+
+.add-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-btn button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 40px;
+  width: 40%;
+
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+
+  font-size: 20px;
+}
+
+.add-btn .cancle-btn {
+  background-color: #595959;
+}
+
+.add-btn .submit-btn {
+  background-color: #ffc700;
 }

@@ -55,6 +55,19 @@ function App() {
       : curDate.getMonth() + 1
   } 자산현황`;
 
+  /** 이전 월로 변경 */
+  const prevMonth = () => {
+    setCurDate(
+      new Date(curDate.getFullYear(), curDate.getMonth() - 1, curDate.getDate())
+    );
+  };
+  /** 다음 월로 변경 */
+  const nextMonth = () => {
+    setCurDate(
+      new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate())
+    );
+  };
+
   /** 내역 수정이나 월 변경 시 account, monthData state 업데이트 */
   useEffect(() => {
     // list가 빈값이 아니면 account 상태 업데이트
@@ -63,21 +76,9 @@ function App() {
     }
   }, [list, curDate]);
 
+  /** 월 데이터가 바뀌면 돈 정보도 업데이트*/
   useEffect(() => {
-    let total = 0;
-    let income = 0;
-    let expenses = 0;
-
-    for (let item of monthData) {
-      income += item.type === "income" && item.money;
-      expenses += item.type === "expenses" && item.money;
-    }
-    total = income - expenses;
-    setAccount({
-      total: income - expenses,
-      income: income,
-      expenses: expenses,
-    });
+    updateAccount();
   }, [monthData]);
 
   /** 해당 월에 해당되는 내역 추출 */
@@ -107,7 +108,7 @@ function App() {
   };
 
   /** 돈 정보 업데이트 */
-  const updateAccount = (monthData) => {
+  const updateAccount = () => {
     let total = 0;
     let income = 0;
     let expenses = 0;
@@ -118,23 +119,10 @@ function App() {
     }
     total = income - expenses;
     setAccount({
-      total: income - expenses,
+      total: total,
       income: income,
       expenses: expenses,
     });
-  };
-
-  /** 이전 월 */
-  const prevMonth = () => {
-    setCurDate(
-      new Date(curDate.getFullYear(), curDate.getMonth() - 1, curDate.getDate())
-    );
-  };
-  /** 다음 월 */
-  const nextMonth = () => {
-    setCurDate(
-      new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate())
-    );
   };
 
   /** context value */

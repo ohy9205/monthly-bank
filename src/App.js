@@ -2,7 +2,7 @@ import "./App.css";
 import Header from "./components/Header";
 import List from "./pages/List";
 import dummy from "./util/dummy";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Add from "./components/Add";
@@ -15,7 +15,7 @@ const listReducer = (list, action) => {
       break;
     }
     case "CREATE": {
-      newList = [action.data, ...list];
+      newList = [action.newData, ...list];
       break;
     }
     case "EDIT": {
@@ -48,6 +48,27 @@ function App() {
   const [curDate, setCurDate] = useState(new Date());
   /** 월에 해당하는 내역 state*/
   const [monthData, setMonthData] = useState([]);
+  /** 내역 번호 */
+  const id = useRef();
+
+  /** 내역 추가 동작 */
+  const onCreate = (date, name, money, type) => {
+    console.log(date, name, money, type);
+    let newData = {
+      id: id.current++,
+      date: new Date(date).getTime(),
+      name,
+      money: parseInt(money),
+      type,
+    };
+    listDispatch({ type: "CREATE", newData });
+  };
+
+  /** 내역 수정 동작 */
+  const onEdit = () => {};
+
+  /** 내역 제거 동작 */
+  const onRemove = () => {};
 
   /** header에 전달할 년-월 정보 */
   const headText = `${curDate.getFullYear()}-${
@@ -80,6 +101,7 @@ function App() {
   /** 월 데이터가 바뀌면 돈 정보도 업데이트*/
   useEffect(() => {
     updateAccount();
+    id.current = monthData.length + 1;
   }, [monthData]);
 
   /** 해당 월에 해당되는 내역 추출 */
@@ -126,13 +148,19 @@ function App() {
     });
   };
 
-  /** context value */
+  /** 내역 추가 화면 on */
+  const addRef = useRef();
+  const onClickAdd = () => {
+    addRef.current.classList.add("add-on");
+  };
+
+  /** context 전달 value */
   const dataValue = { account, monthData };
-  const dispatchValue = {};
+  const dispatchValue = { onCreate, onEdit, onRemove };
 
   return (
     <DataContext.Provider value={dataValue}>
-      <DispatchContext.Provider>
+      <DispatchContext.Provider value={dispatchValue}>
         <div className="App">
           <Header
             headText={headText}
@@ -147,10 +175,13 @@ function App() {
                 className="add-btn"
                 icon={faCirclePlus}
                 size="4x"
+                onClick={(e) => {
+                  onClickAdd();
+                }}
               />
             </button>
           </aside>
-          <Add />
+          <Add isEdit={false} addRef={addRef} />
         </div>
       </DispatchContext.Provider>
     </DataContext.Provider>

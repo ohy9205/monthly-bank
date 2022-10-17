@@ -12,7 +12,7 @@ const DayItem = ({ name, type, money, id, onClick }) => {
       className={type}
       onClick={(e) => {
         let targetName = e.target.tagName;
-        (targetName === "DL" || targetName === "DT" || targetName === "DL") &&
+        (targetName === "DL" || targetName === "DT" || targetName === "DD") &&
           onClick(id);
       }}>
       <dt>{name}</dt>

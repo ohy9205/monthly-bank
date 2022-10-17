@@ -186,19 +186,6 @@ function App() {
             nextMonth={nextMonth}
           />
           <List />
-          {/* <aside>
-            <button>
-              <FontAwesomeIcon
-                className="add-btn"
-                icon={faCirclePlus}
-                size="4x"
-                onClick={(e) => {
-                  setIsAdd(true);
-                }}
-              />
-            </button>
-          </aside>
-          {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />} */}
         </div>
       </DispatchContext.Provider>
     </DataContext.Provider>

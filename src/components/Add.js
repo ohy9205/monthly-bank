@@ -52,7 +52,6 @@ const Add = ({ setIsAdd, targetId }) => {
       ? onEdit(targetId, date, name, money, type)
       : onCreate(date, name, money, type);
     setIsAdd(false);
-    // resetState();
   };
 
   return (
@@ -97,6 +96,7 @@ const Add = ({ setIsAdd, targetId }) => {
             setMoney(parseInt(e.target.value));
           }}
           onKeyDown={(e) => e.keyCode === 13 && handleSubmit()}
+          placeholder="숫자만 입력하세요"
         />
       </div>
       <div className="add-btn">

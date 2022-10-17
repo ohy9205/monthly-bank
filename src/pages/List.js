@@ -1,7 +1,10 @@
 import DayItem from "../components/DayItem";
 import ControlMenu from "../components/ControlMenu";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import Add from "../components/Add";
 
 const List = () => {
   const { monthData } = useContext(DataContext);
@@ -26,6 +29,12 @@ const List = () => {
 
   /** 내역 일자 headText 전달 유무를 따지기 위한 변수 */
   let prevDate = 0;
+
+  /** 내역 추가 화면 on */
+  const addRef = useRef();
+  const onClickAdd = () => {
+    addRef.current.classList.add("add-on");
+  };
 
   return (
     <main>
@@ -57,6 +66,19 @@ const List = () => {
             })}
         </article>
       </section>
+      <aside>
+        <button>
+          <FontAwesomeIcon
+            className="add-btn"
+            icon={faCirclePlus}
+            size="4x"
+            onClick={(e) => {
+              onClickAdd();
+            }}
+          />
+        </button>
+      </aside>
+      <Add isEdit={false} addRef={addRef} />
     </main>
   );
 };

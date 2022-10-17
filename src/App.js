@@ -3,9 +3,6 @@ import Header from "./components/Header";
 import List from "./pages/List";
 import dummy from "./util/dummy";
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Add from "./components/Add";
 
 const listReducer = (list, action) => {
   let newList = [];
@@ -25,6 +22,7 @@ const listReducer = (list, action) => {
       break;
     }
     case "REMOVE": {
+      console.log();
       newList = list.filter((it) => action.targetId !== it.id);
       break;
     }
@@ -53,12 +51,11 @@ function App() {
 
   /** 내역 추가 동작 */
   const onCreate = (date, name, money, type) => {
-    console.log(date, name, money, type);
     let newData = {
       id: id.current++,
       date: new Date(date).getTime(),
       name,
-      money: parseInt(money),
+      money: money,
       type,
     };
     listDispatch({ type: "CREATE", newData });
@@ -68,7 +65,9 @@ function App() {
   const onEdit = () => {};
 
   /** 내역 제거 동작 */
-  const onRemove = () => {};
+  const onRemove = (targetId) => {
+    listDispatch({ type: "REMOVE", targetId });
+  };
 
   /** header에 전달할 년-월 정보 */
   const headText = `${curDate.getFullYear()}-${
@@ -93,9 +92,8 @@ function App() {
   /** 내역 수정이나 월 변경 시 account, monthData state 업데이트 */
   useEffect(() => {
     // list가 빈값이 아니면 account 상태 업데이트
-    if (list && list.length > 0) {
-      updateMonthData();
-    }
+    if (list.length < 0) return;
+    updateMonthData();
   }, [list, curDate]);
 
   /** 월 데이터가 바뀌면 돈 정보도 업데이트*/
@@ -137,21 +135,15 @@ function App() {
     let expenses = 0;
 
     for (let item of monthData) {
-      income += item.type === "income" && item.money;
-      expenses += item.type === "expenses" && item.money;
+      income += item.type === "income" && parseInt(item.money);
+      expenses += item.type === "expenses" && parseInt(item.money);
     }
     total = income - expenses;
     setAccount({
-      total: total,
-      income: income,
-      expenses: expenses,
+      total: total.toString(),
+      income: income.toString(),
+      expenses: expenses.toString(),
     });
-  };
-
-  /** 내역 추가 화면 on */
-  const addRef = useRef();
-  const onClickAdd = () => {
-    addRef.current.classList.add("add-on");
   };
 
   /** context 전달 value */
@@ -167,21 +159,7 @@ function App() {
             prevMonth={prevMonth}
             nextMonth={nextMonth}
           />
-          {/* <Nav /> */}
           <List />
-          <aside>
-            <button>
-              <FontAwesomeIcon
-                className="add-btn"
-                icon={faCirclePlus}
-                size="4x"
-                onClick={(e) => {
-                  onClickAdd();
-                }}
-              />
-            </button>
-          </aside>
-          <Add isEdit={false} addRef={addRef} />
         </div>
       </DispatchContext.Provider>
     </DataContext.Provider>

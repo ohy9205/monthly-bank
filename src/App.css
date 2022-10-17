@@ -117,33 +117,13 @@ button {
 main {
   padding: 0 50px;
   margin: 20px 0;
-  min-height: 30vh;
-}
-
-/* category */
-.category {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  padding: 0 50px;
-  margin: 20px 0;
-}
-
-.category button {
-  width: 175px;
-  height: 40px;
-  padding: 0 20px;
-  background-color: #595959;
-
-  border: none;
-  border-radius: 5px;
-
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
 }
 
 /* list-wrapper - filtering */
+.list-wrapper {
+  min-height: 30vh;
+}
+
 .list-wrapper header {
   height: 40px;
   margin-bottom: 25px;
@@ -268,6 +248,7 @@ aside button .add-btn {
 
   position: absolute;
   bottom: 0;
+  left: 0;
 
   border-radius: 50px 50px 0 0;
   display: none;

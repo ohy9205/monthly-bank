@@ -17,12 +17,11 @@ const listReducer = (list, action) => {
     }
     case "EDIT": {
       newList = list.map((it) =>
-        action.targetId === it.id ? action.data : it
+        action.targetId === it.id ? action.newData : it
       );
       break;
     }
     case "REMOVE": {
-      console.log();
       newList = list.filter((it) => action.targetId !== it.id);
       break;
     }
@@ -62,7 +61,16 @@ function App() {
   };
 
   /** 내역 수정 동작 */
-  const onEdit = () => {};
+  const onEdit = (targetId, date, name, money, type) => {
+    let newData = {
+      id: id.current++,
+      date: new Date(date).getTime(),
+      name,
+      money: money,
+      type,
+    };
+    listDispatch({ type: "EDIT", newData, targetId });
+  };
 
   /** 내역 제거 동작 */
   const onRemove = (targetId) => {

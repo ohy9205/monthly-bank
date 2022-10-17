@@ -251,11 +251,6 @@ aside button .add-btn {
   left: 0;
 
   border-radius: 50px 50px 0 0;
-  display: none;
-}
-
-.add-on {
-  display: block;
 }
 
 .add-wrapper button.active {

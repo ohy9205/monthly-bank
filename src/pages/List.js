@@ -10,6 +10,8 @@ const List = () => {
   const { monthData } = useContext(DataContext);
   const [sortedData, setSortedData] = useState();
   const [filter, setFilter] = useState("all");
+  const [isAdd, setIsAdd] = useState(false);
+  const [targetId, setTargetId] = useState();
 
   /** filtering 동작 */
   useEffect(() => {
@@ -30,11 +32,16 @@ const List = () => {
   /** 내역 일자 headText 전달 유무를 따지기 위한 변수 */
   let prevDate = 0;
 
-  /** 내역 추가 화면 on */
-  const addRef = useRef();
-  const onClickAdd = () => {
-    addRef.current.classList.add("add-on");
+  /** 내역 클릭하면 수행되는 동작 */
+  const onClickEdit = (id) => {
+    setTargetId(id);
+    setIsAdd(true);
   };
+
+  /** add창을 닫으면 target을 초기화한다 */
+  useEffect(() => {
+    isAdd || setTargetId();
+  }, [isAdd]);
 
   return (
     <main>
@@ -54,12 +61,17 @@ const List = () => {
               prevDate = parseInt(date.getDate());
 
               if (isExit) {
-                return <DayItem key={it.id} {...it} />;
+                return <DayItem key={it.id} onClick={onClickEdit} {...it} />;
               } else {
                 return (
                   <React.Fragment key={it.id}>
                     <h1>{headText}</h1>
-                    <DayItem key={it.id} headText={headText} {...it} />
+                    <DayItem
+                      key={it.id}
+                      headText={headText}
+                      onClick={onClickEdit}
+                      {...it}
+                    />
                   </React.Fragment>
                 );
               }
@@ -73,12 +85,12 @@ const List = () => {
             icon={faCirclePlus}
             size="4x"
             onClick={(e) => {
-              onClickAdd();
+              setIsAdd(true);
             }}
           />
         </button>
       </aside>
-      <Add isEdit={false} addRef={addRef} />
+      {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />}
     </main>
   );
 };

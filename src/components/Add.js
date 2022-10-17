@@ -1,56 +1,63 @@
-import { useContext, useRef, useState } from "react";
-import { DispatchContext } from "../App";
+import { useContext, useEffect, useRef, useState } from "react";
+import { DataContext, DispatchContext } from "../App";
 import Button from "./Button";
 
 /** 날짜 포맷 변환 */
-const dateFormat = (date) => {
+const dateFormat = (msdate) => {
+  const date = new Date(msdate);
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
-  let day = date.getDate();
+  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
   return `${year}-${month}-${day}`;
 };
 
-const Add = ({ isEdit, addRef }) => {
-  const { onCreate, onEdiit } = useContext(DispatchContext);
+const Add = ({ setIsAdd, targetId }) => {
+  const { onCreate, onEdit } = useContext(DispatchContext);
+  const { monthData } = useContext(DataContext);
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().getTime());
   const [name, setName] = useState("");
-  const [money, setMoney] = useState("");
+  const [money, setMoney] = useState();
   const [type, setType] = useState("expenses");
 
   const useName = useRef();
   const useMoney = useRef();
 
+  /** add나 edit창의 state 초기화 */
+  useEffect(() => {
+    if (!targetId) {
+      setDate(new Date());
+      setMoney(0);
+      setType("expenses");
+      setName("");
+      return;
+    }
+    const targetData = monthData.find((it) => it.id === targetId);
+    setDate(parseInt(targetData.date));
+    setName(targetData.name);
+    setMoney(parseInt(targetData.money));
+    setType(targetData.type);
+  }, [targetId, monthData]);
+
   /** submit 버튼 클릭시 데이터 저장 */
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     if (name.length < 1) {
       useName.current.focus();
       return false;
-    } else if (money.length < 1) {
+    } else if (!money) {
       useMoney.current.focus();
       return false;
     }
-    isEdit ? onEdiit() : onCreate(date, name, money, type);
-    offAddPage();
-    resetState();
-  };
-
-  /** 내역 추가 페이지 닫기 */
-  const offAddPage = () => {
-    addRef.current.classList.remove("add-on");
-  };
-
-  /** 데이터 초기화 */
-  const resetState = () => {
-    setDate(new Date());
-    setMoney(0);
-    setType("expenses");
-    setName("");
+    targetId
+      ? onEdit(targetId, date, name, money, type)
+      : onCreate(date, name, money, type);
+    setIsAdd(false);
+    // resetState();
   };
 
   return (
-    <section className="add-wrapper" ref={addRef}>
-      <h1>내역 추가</h1>
+    <section className="add-wrapper">
+      <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
       <div className="add-list">
         <div className="type-wrapper">
           <Button
@@ -87,7 +94,7 @@ const Add = ({ isEdit, addRef }) => {
           name="money"
           value={money || ""}
           onChange={(e) => {
-            /[0-9]/.test(e.target.value) && setMoney(e.target.value);
+            setMoney(parseInt(e.target.value));
           }}
           onKeyDown={(e) => e.keyCode === 13 && handleSubmit()}
         />
@@ -96,7 +103,7 @@ const Add = ({ isEdit, addRef }) => {
         <Button
           className={"cancle-btn"}
           text="취소"
-          onClick={() => addRef.current.classList.remove("add-on")}
+          onClick={() => setIsAdd(false)}
         />
         <Button
           className={"submit-btn"}

@@ -3,12 +3,15 @@ import Header from "./components/Header";
 import List from "./pages/List";
 import dummy from "./util/dummy";
 import React, { useEffect, useReducer, useRef, useState } from "react";
+import Add from "./components/Add";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 const listReducer = (list, action) => {
   let newList = [];
   switch (action.type) {
     case "INIT": {
-      newList = [...action.data];
+      newList = action.data;
       break;
     }
     case "CREATE": {
@@ -29,6 +32,7 @@ const listReducer = (list, action) => {
       return list;
     }
   }
+  localStorage.setItem("list", JSON.stringify(newList));
   return newList;
 };
 
@@ -40,13 +44,17 @@ function App() {
   /** 돈정보를 저장하는 state */
   const [account, setAccount] = useState({});
   /** 내역리스트 저장하는 state */
-  const [list, listDispatch] = useReducer(listReducer, dummy);
+  const [list, listDispatch] = useReducer(listReducer, []);
   /** 선택 월 저장하는 state */
   const [curDate, setCurDate] = useState(new Date());
   /** 월에 해당하는 내역 state*/
   const [monthData, setMonthData] = useState([]);
+
+  const [isAdd, setIsAdd] = useState(false);
+  const [targetId, setTargetId] = useState();
+
   /** 내역 번호 */
-  const id = useRef();
+  const id = useRef(0);
 
   /** 내역 추가 동작 */
   const onCreate = (date, name, money, type) => {
@@ -96,6 +104,16 @@ function App() {
       new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate())
     );
   };
+
+  /** 최초 렌더링 시 localStage에 저장된 일기를 꺼내온다 */
+  useEffect(() => {
+    let localData = JSON.parse(localStorage.getItem("list")) || [];
+    if (localData.length >= 1) {
+      localData = localData.sort((a, b) => parseInt(a.date) - parseInt(b.date));
+      id.current = parseInt(localData[0].id) + 1;
+      listDispatch({ type: "INIT", data: localData });
+    }
+  }, []);
 
   /** 내역 수정이나 월 변경 시 account, monthData state 업데이트 */
   useEffect(() => {
@@ -168,6 +186,19 @@ function App() {
             nextMonth={nextMonth}
           />
           <List />
+          {/* <aside>
+            <button>
+              <FontAwesomeIcon
+                className="add-btn"
+                icon={faCirclePlus}
+                size="4x"
+                onClick={(e) => {
+                  setIsAdd(true);
+                }}
+              />
+            </button>
+          </aside>
+          {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />} */}
         </div>
       </DispatchContext.Provider>
     </DataContext.Provider>

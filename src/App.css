@@ -209,8 +209,8 @@ main {
 }
 
 .list-wrapper article dl button {
+  width: 10%;
   background-color: transparent;
-
   font-size: 10px;
   border: none;
 }

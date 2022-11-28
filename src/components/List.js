@@ -1,10 +1,10 @@
-import DayItem from "../components/DayItem";
-import ControlMenu from "../components/ControlMenu";
+import DayItem from "./DayItem";
+import ControlMenu from "./ControlMenu";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import Add from "../components/Add";
+import Add from "./Add";
 
 const List = () => {
   const { monthData } = useContext(DataContext);

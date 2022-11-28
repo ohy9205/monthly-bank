@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "./components/Header";
-import List from "./pages/List";
+import List from "./components/List";
 import dummy from "./util/dummy";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import Add from "./components/Add";

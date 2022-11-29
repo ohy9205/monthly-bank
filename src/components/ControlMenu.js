@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-
 const ControlMenu = ({ onClick }) => {
   /** 필터 클릭시 동작 함수 */
   const clickToggle = (e, type) => {

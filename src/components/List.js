@@ -1,7 +1,6 @@
 import DayItem from "./DayItem";
 import ControlMenu from "./ControlMenu";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { DataContext } from "../App";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Add from "./Add";

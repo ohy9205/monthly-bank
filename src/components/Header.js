@@ -3,8 +3,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from "react";
-import { DataContext } from "../App";
+import { useContext } from "react";
 import ItemContext from "../store/item-context";
 
 const Header = ({ text }) => {

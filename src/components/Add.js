@@ -6,7 +6,8 @@ import React, {
   useState,
 } from "react";
 import ItemContext from "../store/item-context";
-import Button from "./Button";
+import Button from "../UI/Button";
+import Input from "../UI/Input";
 
 /** 날짜 포맷 변환 */
 const dateFormat = (msdate) => {
@@ -56,7 +57,8 @@ const Add = ({ setIsAdd, targetId }) => {
   };
 
   /** submit 버튼 클릭시 데이터 저장 */
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (name.length < 1) {
       useName.current.focus();
       return false;
@@ -65,8 +67,6 @@ const Add = ({ setIsAdd, targetId }) => {
       return false;
     }
 
-    console.log(date, name, money, type);
-
     targetId
       ? editItem(targetId, { date, name, money, type })
       : addItem({ date, name, money, type });
@@ -74,7 +74,7 @@ const Add = ({ setIsAdd, targetId }) => {
   };
 
   return (
-    <Fragment>
+    <form onSubmit={handleSubmit}>
       <div className="add-backdrop" onClick={() => setIsAdd(false)}></div>
       <div className="add-wrapper">
         <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
@@ -91,33 +91,35 @@ const Add = ({ setIsAdd, targetId }) => {
               onClick={() => setType("INCOMES")}
             />
           </div>
-          <label htmlFor="date">날짜</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={dateFormat(date)}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <label htmlFor="name">설명</label>
-          <input
-            ref={useName}
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <label htmlFor="money">금액</label>
-          <input
-            ref={useMoney}
-            id="money"
-            name="money"
-            value={money || ""}
-            onChange={(e) => {
-              setMoney(parseInt(e.target.value));
+          <Input
+            input={{
+              type: "date",
+              id: "date",
+              value: dateFormat(date),
+              event: (e) => setDate(e.target.value),
             }}
-            onKeyDown={(e) => e.keyCode === 13 && handleSubmit()}
-            placeholder="숫자만 입력하세요"
+            labelText="날짜"
+          />
+          <Input
+            input={{
+              ref: useName,
+              type: "name",
+              id: "name",
+              value: name,
+              event: (e) => setName(e.target.value),
+            }}
+            labelText="설명"
+          />
+          <Input
+            input={{
+              ref: useMoney,
+              type: "number",
+              id: "money",
+              value: money || "",
+              event: (e) => setMoney(e.target.value),
+              placeholder: "숫자만 입력하세요",
+            }}
+            labelText="금액"
           />
         </div>
         <div className="add-btn">
@@ -134,7 +136,7 @@ const Add = ({ setIsAdd, targetId }) => {
           />
         </div>
       </div>
-    </Fragment>
+    </form>
   );
 };
 

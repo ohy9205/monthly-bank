@@ -241,14 +241,15 @@ aside button .add-btn {
   color: #ffc700;
 }
 
-/* add-overlay */
-.add-overlay {
+/* add-backdrop */
+.add-backdrop {
   width: 100%;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* add-wrapper */

@@ -75,7 +75,7 @@ const Add = ({ setIsAdd, targetId }) => {
 
   return (
     <Fragment>
-      <div className="add-overlay" onClick={() => setIsAdd(false)}></div>
+      <div className="add-backdrop" onClick={() => setIsAdd(false)}></div>
       <div className="add-wrapper">
         <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
         <div className="add-list">

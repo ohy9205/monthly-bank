@@ -6,24 +6,20 @@ const listReducer = (list, action) => {
   let newList = [];
   switch (action.type) {
     case "INIT": {
-      console.log("INIT");
       newList = action.items;
       break;
     }
     case "ADD": {
-      console.log("ADD");
       newList = [action.newItem, ...list];
       break;
     }
     case "EDIT": {
-      console.log("EDIT", action.targetId, action.newData);
       newList = list.map((it) =>
         action.targetId === it.id ? action.newData : it
       );
       break;
     }
     case "REMOVE": {
-      console.log("REMOVE");
       newList = list.filter((it) => action.targetId !== it.id);
       break;
     }
@@ -48,8 +44,6 @@ const ItemProvider = ({ children }) => {
     if (localData.length >= 1) {
       localData = localData.sort((a, b) => parseInt(a.date) - parseInt(b.date));
       itemId.current = parseInt(localData[0].id) + 1;
-      // console.log(itemCtx.initItem);
-      // itemCtx.initItem(localData);
       initItem(localData);
     }
   }, []);
@@ -66,18 +60,15 @@ const ItemProvider = ({ children }) => {
   useEffect(() => {
     updateAccount();
     itemId.current = monthData.length + 1;
-    console.log("monthData", monthData);
   }, [monthData]);
 
   /** 내역 초기화 */
   const initItem = (items) => {
-    console.log("init");
     listDispatch({ type: "INIT", items });
   };
 
   /** 내역 추가 동작 */
   const addItem = (item) => {
-    console.log("add");
     const newItem = {
       id: itemId.current++,
       ...item,
@@ -91,7 +82,6 @@ const ItemProvider = ({ children }) => {
 
   /** 내역 수정 동작 */
   const editItem = (targetId, item) => {
-    console.log("edit");
     //newData: 날짜, 내역, 금액, 분류
     const newData = {
       id: targetId,
@@ -103,7 +93,6 @@ const ItemProvider = ({ children }) => {
 
   /** 내역 제거 동작 */
   const removeItem = (targetId) => {
-    console.log("remove");
     listDispatch({ type: "REMOVE", targetId: targetId });
   };
 

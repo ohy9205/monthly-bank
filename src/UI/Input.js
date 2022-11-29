@@ -1,5 +1,4 @@
 const Input = ({ input, labelText }) => {
-  console.log(input);
   return (
     <div>
       <label htmlFor={input.id}>{labelText}</label>

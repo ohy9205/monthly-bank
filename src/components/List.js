@@ -5,18 +5,19 @@ import { DataContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Add from "./Add";
+import ItemContext from "../store/item-context";
 
 const List = () => {
-  const { monthData } = useContext(DataContext);
+  const { monthData } = useContext(ItemContext);
   const [sortedData, setSortedData] = useState();
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("ALL");
   const [isAdd, setIsAdd] = useState(false);
   const [targetId, setTargetId] = useState();
 
   /** filtering 동작 */
   useEffect(() => {
     let filterData = [];
-    if (monthData.length > 0 && filter === "all") {
+    if (monthData.length > 0 && filter === "ALL") {
       filterData = monthData.sort(compare);
     } else {
       filterData = monthData.filter((it) => it.type === filter).sort(compare);

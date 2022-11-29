@@ -1,11 +1,16 @@
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { DispatchContext } from "../App";
+import ItemContext from "../store/item-context";
 
 const DayItem = ({ name, type, money, id, onClick }) => {
   let moneyFormat = parseInt(money).toLocaleString();
-  let { onRemove } = useContext(DispatchContext);
+  let itemCtx = useContext(ItemContext);
+
+  /**내역 제거 핸들러 */
+  const removeItemHandler = () => {
+    itemCtx.removeItem(id);
+  };
 
   return (
     <dl
@@ -16,12 +21,12 @@ const DayItem = ({ name, type, money, id, onClick }) => {
           onClick(id);
       }}>
       <dt>{name}</dt>
-      <dd>{type === "income" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
+      <dd>{type === "INCOMES" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
       <button>
         <FontAwesomeIcon
           className="del-btn"
           icon={faCircleXmark}
-          onClick={() => onRemove(id)}
+          onClick={removeItemHandler}
         />
       </button>
     </dl>

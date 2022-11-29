@@ -16,13 +16,13 @@ const ControlMenu = ({ onClick }) => {
     <div className="filter-wrapper">
       <button
         className={`filter filter-on`}
-        onClick={(e) => clickToggle(e, "all")}>
+        onClick={(e) => clickToggle(e, "ALL")}>
         총
       </button>
-      <button className={`filter`} onClick={(e) => clickToggle(e, "income")}>
+      <button className={`filter`} onClick={(e) => clickToggle(e, "INCOMES")}>
         수입
       </button>
-      <button className={`filter`} onClick={(e) => clickToggle(e, "expenses")}>
+      <button className={`filter`} onClick={(e) => clickToggle(e, "EXPENSES")}>
         지출
       </button>
     </div>

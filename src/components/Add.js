@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { DataContext, DispatchContext } from "../App";
+import ItemContext from "../store/item-context";
 import Button from "./Button";
 
 /** 날짜 포맷 변환 */
@@ -12,13 +12,13 @@ const dateFormat = (msdate) => {
 };
 
 const Add = ({ setIsAdd, targetId }) => {
-  const { onCreate, onEdit } = useContext(DispatchContext);
-  const { monthData } = useContext(DataContext);
+  const { addItem, editItem } = useContext(ItemContext);
+  const { monthData } = useContext(ItemContext);
 
-  const [date, setDate] = useState(new Date().getTime());
+  const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
   const [money, setMoney] = useState();
-  const [type, setType] = useState("expenses");
+  const [type, setType] = useState("EXPENSES");
 
   const useName = useRef();
   const useMoney = useRef();
@@ -28,7 +28,7 @@ const Add = ({ setIsAdd, targetId }) => {
     if (!targetId) {
       setDate(new Date());
       setMoney(0);
-      setType("expenses");
+      setType("EXPENSES");
       setName("");
       return;
     }
@@ -39,6 +39,16 @@ const Add = ({ setIsAdd, targetId }) => {
     setType(targetData.type);
   }, [targetId, monthData]);
 
+  /**날짜 선택 */
+  const selectDateHandler = (e) => {
+    setDate(new Date(e.target.value).getTime());
+  };
+
+  /**분류 선택 */
+  const selectTypeHandler = (type) => {
+    setType(type);
+  };
+
   /** submit 버튼 클릭시 데이터 저장 */
   const handleSubmit = () => {
     if (name.length < 1) {
@@ -48,9 +58,12 @@ const Add = ({ setIsAdd, targetId }) => {
       useMoney.current.focus();
       return false;
     }
+
+    console.log(date, name, money, type);
+
     targetId
-      ? onEdit(targetId, date, name, money, type)
-      : onCreate(date, name, money, type);
+      ? editItem(targetId, { date, name, money, type })
+      : addItem({ date, name, money, type });
     setIsAdd(false);
   };
 
@@ -60,14 +73,14 @@ const Add = ({ setIsAdd, targetId }) => {
       <div className="add-list">
         <div className="type-wrapper">
           <Button
-            className={`expenses-btn${type === "expenses" ? " type-on" : ""}`}
+            className={`expenses-btn${type === "EXPENSES" ? " type-on" : ""}`}
             text="지출"
-            onClick={() => setType("expenses")}
+            onClick={() => setType("EXPENSES")}
           />
           <Button
-            className={`income-btn${type === "income" ? " type-on" : ""}`}
+            className={`income-btn${type === "INCOMES" ? " type-on" : ""}`}
             text="수입"
-            onClick={() => setType("income")}
+            onClick={() => setType("INCOMES")}
           />
         </div>
         <label htmlFor="date">날짜</label>
@@ -76,7 +89,7 @@ const Add = ({ setIsAdd, targetId }) => {
           id="date"
           name="date"
           value={dateFormat(date)}
-          onChange={(e) => setDate(new Date(e.target.value))}
+          onChange={(e) => setDate(e.target.value)}
         />
         <label htmlFor="name">설명</label>
         <input
@@ -109,7 +122,7 @@ const Add = ({ setIsAdd, targetId }) => {
           className={"submit-btn"}
           text="등록"
           type="active"
-          onClick={() => handleSubmit()}
+          onClick={handleSubmit}
         />
       </div>
     </section>

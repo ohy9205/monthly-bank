@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import ItemContext from "../store/item-context";
 
-const Header = ({ text }) => {
+const Header = () => {
   const itemCtx = useContext(ItemContext);
   const account = itemCtx.account;
   const curDate = itemCtx.curDate;

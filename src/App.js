@@ -12,7 +12,7 @@ function App() {
   return (
     <ItemProvider>
       <div className="App">
-        <Header headText={"test"} />
+        <Header />
         <List />
       </div>
     </ItemProvider>

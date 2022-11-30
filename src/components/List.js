@@ -77,7 +77,6 @@ const List = () => {
   return (
     <main className="list-wrapper">
       <header>
-        {/* filtering */}
         <h1>월간 내역</h1>
         <ControlMenu onClick={filterHandler} />
       </header>

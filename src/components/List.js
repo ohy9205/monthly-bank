@@ -1,6 +1,6 @@
 import DayItem from "./DayItem";
 import ControlMenu from "./ControlMenu";
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Add from "./Add";
@@ -13,6 +13,11 @@ const List = () => {
   const [isAdd, setIsAdd] = useState(false);
   const [targetId, setTargetId] = useState();
 
+  /** 내역 내림차순으로 정렬 */
+  const compare = (a, b) => {
+    return b.date - a.date;
+  };
+
   /** filtering 동작 */
   useEffect(() => {
     let filterData = [];
@@ -24,15 +29,7 @@ const List = () => {
     setSortedData(filterData);
   }, [monthData, filter]);
 
-  /** 내역 내림차순으로 정렬 */
-  const compare = (a, b) => {
-    return b.date - a.date;
-  };
-
-  /** 내역 일자 headText 전달 유무를 따지기 위한 변수 */
-  let prevDate = 0;
-
-  /** 내역 클릭하면 수행되는 동작 */
+  /** 내역 클릭하면 수정 창이 열린다 */
   const onClickEdit = (id) => {
     setTargetId(id);
     setIsAdd(true);
@@ -43,6 +40,30 @@ const List = () => {
     isAdd || setTargetId();
   }, [isAdd]);
 
+  /** 내역 렌더링 */
+  const itemRendering = () => {
+    if (!sortedData) return;
+
+    let prevDate = 0;
+    let isExist = false;
+    const result = sortedData.map((it) => {
+      const date = new Date(parseInt(it.date)); // 내역날짜
+      const dateText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+      console.log(date, prevDate, dateText);
+
+      isExist = prevDate === date.getDate();
+      prevDate = date.getDate();
+
+      return (
+        <Fragment>
+          {!isExist && <h1>{dateText}</h1>}
+          <DayItem key={it.id} onClick={onClickEdit} {...it} />
+        </Fragment>
+      );
+    });
+    return result;
+  };
+
   return (
     <main className="list-wrapper">
       <header>
@@ -52,31 +73,7 @@ const List = () => {
         <ControlMenu onClick={setFilter} />
       </header>
       <section>
-        <article>
-          {sortedData &&
-            sortedData.map((it) => {
-              let date = new Date(parseInt(it.date)); // 내역날짜
-              const headText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
-              let isExit = parseInt(date.getDate()) === prevDate;
-              prevDate = parseInt(date.getDate());
-
-              if (isExit) {
-                return <DayItem key={it.id} onClick={onClickEdit} {...it} />;
-              } else {
-                return (
-                  <React.Fragment key={it.id}>
-                    <h1>{headText}</h1>
-                    <DayItem
-                      key={it.id}
-                      headText={headText}
-                      onClick={onClickEdit}
-                      {...it}
-                    />
-                  </React.Fragment>
-                );
-              }
-            })}
-        </article>
+        <article>{itemRendering()}</article>
       </section>
       <footer>
         <button>

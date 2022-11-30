@@ -34,15 +34,20 @@ const List = () => {
     setFilter(filter);
   };
 
-  /** 내역 클릭하면 수정 창이 열린다 */
-  const onClickEdit = (id) => {
+  /** 내역 클릭하면 add 창이 열린다 */
+  const onAddHandler = (id) => {
     setTargetId(id);
     setIsAdd(true);
   };
 
+  /** add창을 닫는다 */
+  const onCloseHandler = () => {
+    setIsAdd(false);
+  };
+
   /** add창을 닫으면 target을 초기화한다 */
   useEffect(() => {
-    isAdd || setTargetId();
+    isAdd || setTargetId(null);
   }, [isAdd]);
 
   /** 내역 렌더링 */
@@ -62,7 +67,7 @@ const List = () => {
       return (
         <Fragment>
           {!isExist && <h1>{dateText}</h1>}
-          <DayItem key={it.id} onClick={onClickEdit} {...it} />
+          <DayItem key={it.id} onClick={onAddHandler} {...it} />
         </Fragment>
       );
     });
@@ -91,7 +96,7 @@ const List = () => {
           />
         </button>
       </footer>
-      {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />}
+      {isAdd && <Add onClose={onCloseHandler} targetId={targetId} />}
     </main>
   );
 };

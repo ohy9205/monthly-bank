@@ -12,7 +12,7 @@ const dateFormat = (msdate) => {
   return `${year}-${month}-${day}`;
 };
 
-const Add = ({ setIsAdd, targetId }) => {
+const Add = ({ onClose, targetId }) => {
   const { addItem, editItem } = useContext(ItemContext);
   const { monthData } = useContext(ItemContext);
 
@@ -64,12 +64,12 @@ const Add = ({ setIsAdd, targetId }) => {
     targetId
       ? editItem(targetId, { date, name, money, type })
       : addItem({ date, name, money, type });
-    setIsAdd(false);
+    onClose();
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="add-backdrop" onClick={() => setIsAdd(false)}></div>
+      <div className="add-backdrop" onClick={onClose}></div>
       <div className="add-wrapper">
         <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
         <div className="add-list">
@@ -117,11 +117,7 @@ const Add = ({ setIsAdd, targetId }) => {
           />
         </div>
         <div className="add-btn">
-          <Button
-            className={"cancle-btn"}
-            text="취소"
-            onClick={() => setIsAdd(false)}
-          />
+          <Button className={"cancle-btn"} text="취소" onClick={onclose} />
           <Button
             className={"submit-btn"}
             text="등록"

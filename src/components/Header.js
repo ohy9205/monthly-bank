@@ -36,9 +36,9 @@ const Header = () => {
 
   return (
     <header className="main-header">
-      <Button type="button" className={"left-btn"}>
+      <button type="button" className={"left-btn"}>
         <FontAwesomeIcon icon={faChevronLeft} onClick={prevMonthHandler} />
-      </Button>
+      </button>
       <div className="left-col">
         <h1>{headText}</h1>
         <p>{total}</p>
@@ -53,9 +53,9 @@ const Header = () => {
           <p>{expenses}</p>
         </div>
       </div>
-      <Button type="button" className={"right-btn"}>
+      <button type="button" className={"right-btn"}>
         <FontAwesomeIcon icon={faChevronRight} onClick={nextMonthHandler} />
-      </Button>
+      </button>
     </header>
   );
 };

@@ -30,8 +30,9 @@ const List = () => {
   }, [monthData, filter]);
 
   /**필터링 핸들러 */
-  const filterHandler = (fiilter) => {
+  const onFilteringHandler = (filter) => {
     setFilter(filter);
+    // console.log(filter);
   };
 
   /** 내역 클릭하면 add 창이 열린다 */
@@ -59,13 +60,12 @@ const List = () => {
     const result = sortedData.map((it) => {
       const date = new Date(parseInt(it.date)); // 내역날짜
       const dateText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
-      console.log(date, prevDate, dateText);
 
       isExist = prevDate === date.getDate();
       prevDate = date.getDate();
 
       return (
-        <Fragment>
+        <Fragment key={it.id}>
           {!isExist && <h1>{dateText}</h1>}
           <DayItem key={it.id} onClick={onAddHandler} {...it} />
         </Fragment>
@@ -78,7 +78,7 @@ const List = () => {
     <main className="list-wrapper">
       <header>
         <h1>월간 내역</h1>
-        <ControlMenu onClick={filterHandler} />
+        <ControlMenu onFilter={onFilteringHandler} />
       </header>
       <section>
         <article>{itemRendering()}</article>

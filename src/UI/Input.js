@@ -3,6 +3,7 @@ const Input = ({ input, labelText }) => {
     <div>
       <label htmlFor={input.id}>{labelText}</label>
       <input
+        ref={input.ref}
         type={input.type}
         id={input.id}
         value={input.value}

@@ -75,15 +75,17 @@ const Add = ({ onClose, targetId }) => {
         <div className="add-list">
           <div className="type-wrapper">
             <Button
+              type="button"
               className={`expenses-btn${type === "EXPENSES" ? " type-on" : ""}`}
-              text="지출"
-              onClick={() => setType("EXPENSES")}
-            />
+              onClick={() => setType("EXPENSES")}>
+              지출
+            </Button>
             <Button
+              type="button"
               className={`income-btn${type === "INCOMES" ? " type-on" : ""}`}
-              text="수입"
-              onClick={() => setType("INCOMES")}
-            />
+              onClick={() => setType("INCOMES")}>
+              수입
+            </Button>
           </div>
           <Input
             input={{
@@ -117,13 +119,12 @@ const Add = ({ onClose, targetId }) => {
           />
         </div>
         <div className="add-btn">
-          <Button className={"cancle-btn"} text="취소" onClick={onclose} />
-          <Button
-            className={"submit-btn"}
-            text="등록"
-            type="active"
-            onClick={handleSubmit}
-          />
+          <Button className={"cancle-btn"} onClick={onclose}>
+            취소
+          </Button>
+          <Button className={"submit-btn"} active="on" onClick={handleSubmit}>
+            등록
+          </Button>
         </div>
       </div>
     </form>

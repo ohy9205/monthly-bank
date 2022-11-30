@@ -222,20 +222,20 @@ main {
   color: #595959;
 }
 
-/* aside */
-aside {
+/* footer */
+footer {
   text-align: center;
   padding-bottom: 20px;
 }
 
-aside button {
+footer button {
   background-color: transparent;
   border: none;
   bottom: 20px;
   right: 20px;
 }
 
-aside button .add-btn {
+footer button .add-btn {
   width: 45px;
   height: 45px;
   color: #ffc700;

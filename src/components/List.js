@@ -44,14 +44,14 @@ const List = () => {
   }, [isAdd]);
 
   return (
-    <main>
-      <section className="list-wrapper">
-        <header>
-          {/* filtering */}
-          <h1>월간 내역</h1>
-          {/* 총, 지출, 수입 선택시 동작할 함수 생성하고 props로 전달 */}
-          <ControlMenu onClick={setFilter} />
-        </header>
+    <main className="list-wrapper">
+      <header>
+        {/* filtering */}
+        <h1>월간 내역</h1>
+        {/* 총, 지출, 수입 선택시 동작할 함수 생성하고 props로 전달 */}
+        <ControlMenu onClick={setFilter} />
+      </header>
+      <section>
         <article>
           {sortedData &&
             sortedData.map((it) => {
@@ -78,7 +78,7 @@ const List = () => {
             })}
         </article>
       </section>
-      <aside>
+      <footer>
         <button>
           <FontAwesomeIcon
             className="add-btn"
@@ -89,7 +89,7 @@ const List = () => {
             }}
           />
         </button>
-      </aside>
+      </footer>
       {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />}
     </main>
   );

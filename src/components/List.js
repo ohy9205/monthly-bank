@@ -29,6 +29,11 @@ const List = () => {
     setSortedData(filterData);
   }, [monthData, filter]);
 
+  /**필터링 핸들러 */
+  const filterHandler = (fiilter) => {
+    setFilter(filter);
+  };
+
   /** 내역 클릭하면 수정 창이 열린다 */
   const onClickEdit = (id) => {
     setTargetId(id);
@@ -69,8 +74,7 @@ const List = () => {
       <header>
         {/* filtering */}
         <h1>월간 내역</h1>
-        {/* 총, 지출, 수입 선택시 동작할 함수 생성하고 props로 전달 */}
-        <ControlMenu onClick={setFilter} />
+        <ControlMenu onClick={filterHandler} />
       </header>
       <section>
         <article>{itemRendering()}</article>

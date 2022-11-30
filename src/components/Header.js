@@ -5,6 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import ItemContext from "../store/item-context";
+import Button from "../UI/Button";
 
 const Header = () => {
   const itemCtx = useContext(ItemContext);
@@ -35,9 +36,9 @@ const Header = () => {
 
   return (
     <header className="main-header">
-      <button className="left-btn">
+      <Button type="button" className={"left-btn"}>
         <FontAwesomeIcon icon={faChevronLeft} onClick={prevMonthHandler} />
-      </button>
+      </Button>
       <div className="left-col">
         <h1>{headText}</h1>
         <p>{total}</p>
@@ -52,9 +53,9 @@ const Header = () => {
           <p>{expenses}</p>
         </div>
       </div>
-      <button className="right-btn">
+      <Button type="button" className={"right-btn"}>
         <FontAwesomeIcon icon={faChevronRight} onClick={nextMonthHandler} />
-      </button>
+      </Button>
     </header>
   );
 };

@@ -46,8 +46,18 @@ const Add = ({ onClose, targetId }) => {
   };
 
   /**분류 선택 */
-  const selectTypeHandler = (type) => {
-    setType(type);
+  const selectTypeHandler = (e) => {
+    setType(e.target.dataset.type);
+  };
+
+  /**이름 입력 */
+  const enteredName = (e) => {
+    setName(e.target.value);
+  };
+
+  /**금액 입력 */
+  const enteredMoney = (e) => {
+    setMoney(e.target.value);
   };
 
   /** submit 버튼 클릭시 데이터 저장 */
@@ -76,14 +86,16 @@ const Add = ({ onClose, targetId }) => {
           <div className="type-wrapper">
             <Button
               type="button"
-              className={`expenses-btn${type === "EXPENSES" ? " type-on" : ""}`}
-              onClick={() => setType("EXPENSES")}>
+              dataset="EXPENSE"
+              className={`expenses-btn ${type === "EXPENSES" ? "type-on" : ""}`}
+              onClick={selectTypeHandler}>
               지출
             </Button>
             <Button
               type="button"
-              className={`income-btn${type === "INCOMES" ? " type-on" : ""}`}
-              onClick={() => setType("INCOMES")}>
+              dataset="INCOMES"
+              className={`income-btn ${type === "INCOMES" ? "type-on" : ""}`}
+              onClick={selectTypeHandler}>
               수입
             </Button>
           </div>
@@ -92,7 +104,7 @@ const Add = ({ onClose, targetId }) => {
               type: "date",
               id: "date",
               value: dateFormat(date),
-              event: (e) => setDate(e.target.value),
+              event: selectDateHandler,
             }}
             labelText="날짜"
           />
@@ -102,7 +114,7 @@ const Add = ({ onClose, targetId }) => {
               type: "name",
               id: "name",
               value: name,
-              event: (e) => setName(e.target.value),
+              event: enteredName,
             }}
             labelText="설명"
           />
@@ -112,7 +124,7 @@ const Add = ({ onClose, targetId }) => {
               type: "number",
               id: "money",
               value: money || "",
-              event: (e) => setMoney(e.target.value),
+              event: enteredMoney,
               placeholder: "숫자만 입력하세요",
             }}
             labelText="금액"

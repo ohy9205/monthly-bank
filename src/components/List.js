@@ -35,18 +35,18 @@ const List = () => {
     // console.log(filter);
   };
 
-  /** 내역 클릭하면 add 창이 열린다 */
-  const onAddHandler = (id) => {
+  /** 내역 클릭하면 edit 창이 열린다 */
+  const onEditHandler = (id) => {
     setTargetId(id);
     setIsAdd(true);
   };
 
-  /** add창을 닫는다 */
+  /** add/edit창을 닫는다 */
   const onCloseHandler = () => {
     setIsAdd(false);
   };
 
-  /** add창을 닫으면 target을 초기화한다 */
+  /** add/edit창을 닫으면 target을 초기화한다 */
   useEffect(() => {
     isAdd || setTargetId(null);
   }, [isAdd]);
@@ -67,7 +67,7 @@ const List = () => {
       return (
         <Fragment key={it.id}>
           {!isExist && <h1>{dateText}</h1>}
-          <DayItem key={it.id} onClick={onAddHandler} {...it} />
+          <DayItem key={it.id} onEdit={onEditHandler} {...it} />
         </Fragment>
       );
     });

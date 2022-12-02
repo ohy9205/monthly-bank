@@ -77,17 +77,17 @@ const ItemProvider = ({ children }) => {
   const updateAccount = useCallback(() => {
     let total = 0;
     let income = 0;
-    let expenses = 0;
+    let spending = 0;
 
     for (let item of monthData) {
-      income += item.type === "INCOMES" && parseInt(item.money);
-      expenses += item.type === "EXPENSES" && parseInt(item.money);
+      income += item.type === "INCOME" && parseInt(item.money);
+      spending += item.type === "SPENDING" && parseInt(item.money);
     }
-    total = income - expenses;
+    total = income - spending;
     setAccount({
       total: total.toString(),
       income: income.toString(),
-      expenses: expenses.toString(),
+      spending: spending.toString(),
     });
   }, [monthData]);
 

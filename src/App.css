@@ -201,11 +201,11 @@ main {
   letter-spacing: -0.5px;
 }
 
-.list-wrapper article dl.INCOMES dd {
+.list-wrapper article dl.INCOME dd {
   color: #4781ff;
 }
 
-.list-wrapper article dl.EXPENSES dd {
+.list-wrapper article dl.SPENDING dd {
   color: #ff4747;
 }
 

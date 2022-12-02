@@ -19,7 +19,7 @@ const Add = ({ onClose, targetId }) => {
   const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
   const [money, setMoney] = useState();
-  const [type, setType] = useState("EXPENSES");
+  const [type, setType] = useState("SPENDING");
 
   const useName = useRef();
   const useMoney = useRef();
@@ -29,7 +29,7 @@ const Add = ({ onClose, targetId }) => {
     if (!targetId) {
       setDate(new Date());
       setMoney(0);
-      setType("EXPENSES");
+      setType("SPENDING");
       setName("");
       return;
     }
@@ -86,15 +86,15 @@ const Add = ({ onClose, targetId }) => {
           <div className="type-wrapper">
             <Button
               type="button"
-              dataset="EXPENSES"
-              className={`expenses-btn ${type === "EXPENSES" ? "type-on" : ""}`}
+              dataset="SPENDING"
+              className={`spending-btn ${type === "SPENDING" ? "type-on" : ""}`}
               onClick={selectTypeHandler}>
               지출
             </Button>
             <Button
               type="button"
-              dataset="INCOMES"
-              className={`income-btn ${type === "INCOMES" ? "type-on" : ""}`}
+              dataset="INCOME"
+              className={`income-btn ${type === "INCOME" ? "type-on" : ""}`}
               onClick={selectTypeHandler}>
               수입
             </Button>
@@ -131,7 +131,7 @@ const Add = ({ onClose, targetId }) => {
           />
         </div>
         <div className="add-btn">
-          <Button className={"cancle-btn"} onClick={onclose}>
+          <Button className={"cancle-btn"} onClick={onClose}>
             취소
           </Button>
           <Button className={"submit-btn"} active="on" onClick={handleSubmit}>

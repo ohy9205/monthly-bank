@@ -15,7 +15,7 @@ const Header = () => {
   // const { account } = useContext(DataContext);
   const total = parseInt(account.total).toLocaleString();
   const income = parseInt(account.income).toLocaleString();
-  const expenses = parseInt(account.expenses).toLocaleString();
+  const spending = parseInt(account.spending).toLocaleString();
 
   /** header에 전달할 년-월 정보 */
   const headText = `${curDate.getFullYear()}-${
@@ -50,7 +50,7 @@ const Header = () => {
         </div>
         <div className="total-money">
           <h2>지출</h2>
-          <p>{expenses}</p>
+          <p>{spending}</p>
         </div>
       </div>
       <button type="button" className={"right-btn"}>

@@ -21,7 +21,7 @@ const DayItem = ({ name, type, money, id, onEdit }) => {
           onEdit(id);
       }}>
       <dt>{name}</dt>
-      <dd>{type === "INCOMES" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
+      <dd>{type === "INCOME" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
       <button>
         <FontAwesomeIcon
           className="del-btn"

@@ -42,8 +42,8 @@ const ItemProvider = ({ children }) => {
   useEffect(() => {
     let localData = JSON.parse(localStorage.getItem("list")) || [];
     if (localData.length >= 1) {
-      localData = localData.sort((a, b) => parseInt(a.date) - parseInt(b.date));
-      itemId.current = parseInt(localData[0].id) + 1;
+      localData = localData.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+      itemId.current = parseInt(localData[0].id);
       initItem(localData);
     }
   }, []);
@@ -71,6 +71,7 @@ const ItemProvider = ({ children }) => {
       })
     );
   }, [curDate, list]);
+  // 수정 시에는 list무조건 재렌더링됨, 근데 리스트 내용 변경 없을수도있을대를 위해서 list에 useMemo처리해야함
 
   /** 월 돈 정보 업데이트 */
   const updateAccount = useCallback(() => {
@@ -100,7 +101,6 @@ const ItemProvider = ({ children }) => {
   /** 월 데이터가 바뀌면 돈 정보도 업데이트*/
   useEffect(() => {
     updateAccount();
-    itemId.current = monthData.length + 1;
   }, [monthData, updateAccount]);
 
   /** 내역 초기화 */
@@ -110,8 +110,9 @@ const ItemProvider = ({ children }) => {
 
   /** 내역 추가 동작 */
   const addItem = (item) => {
+    itemId.current += 1;
     const newItem = {
-      id: itemId.current++,
+      id: itemId.current,
       ...item,
       date: new Date(item.date).getTime(),
     };

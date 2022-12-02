@@ -201,11 +201,11 @@ main {
   letter-spacing: -0.5px;
 }
 
-.list-wrapper article dl.income dd {
+.list-wrapper article dl.INCOMES dd {
   color: #4781ff;
 }
 
-.list-wrapper article dl.expenses dd {
+.list-wrapper article dl.EXPENSES dd {
   color: #ff4747;
 }
 
@@ -241,6 +241,17 @@ aside button .add-btn {
   color: #ffc700;
 }
 
+/* add-backdrop */
+.add-backdrop {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+}
+
 /* add-wrapper */
 .add-wrapper {
   width: 100%;
@@ -251,8 +262,10 @@ aside button .add-btn {
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 100;
 
   border-radius: 50px 50px 0 0;
+  box-shadow: 0px -2px 18px 0px rgba(0, 0, 0, 0.5);
 }
 
 .add-wrapper button.active {

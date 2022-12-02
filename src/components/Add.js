@@ -1,6 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { DataContext, DispatchContext } from "../App";
-import Button from "./Button";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import ItemContext from "../store/item-context";
+import Button from "../UI/Button";
+import Input from "../UI/Input";
 
 /** 날짜 포맷 변환 */
 const dateFormat = (msdate) => {
@@ -12,13 +13,13 @@ const dateFormat = (msdate) => {
 };
 
 const Add = ({ setIsAdd, targetId }) => {
-  const { onCreate, onEdit } = useContext(DispatchContext);
-  const { monthData } = useContext(DataContext);
+  const { addItem, editItem } = useContext(ItemContext);
+  const { monthData } = useContext(ItemContext);
 
-  const [date, setDate] = useState(new Date().getTime());
+  const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
   const [money, setMoney] = useState();
-  const [type, setType] = useState("expenses");
+  const [type, setType] = useState("EXPENSES");
 
   const useName = useRef();
   const useMoney = useRef();
@@ -28,7 +29,7 @@ const Add = ({ setIsAdd, targetId }) => {
     if (!targetId) {
       setDate(new Date());
       setMoney(0);
-      setType("expenses");
+      setType("EXPENSES");
       setName("");
       return;
     }
@@ -39,8 +40,19 @@ const Add = ({ setIsAdd, targetId }) => {
     setType(targetData.type);
   }, [targetId, monthData]);
 
+  /**날짜 선택 */
+  const selectDateHandler = (e) => {
+    setDate(new Date(e.target.value).getTime());
+  };
+
+  /**분류 선택 */
+  const selectTypeHandler = (type) => {
+    setType(type);
+  };
+
   /** submit 버튼 클릭시 데이터 저장 */
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (name.length < 1) {
       useName.current.focus();
       return false;
@@ -48,71 +60,77 @@ const Add = ({ setIsAdd, targetId }) => {
       useMoney.current.focus();
       return false;
     }
+
     targetId
-      ? onEdit(targetId, date, name, money, type)
-      : onCreate(date, name, money, type);
+      ? editItem(targetId, { date, name, money, type })
+      : addItem({ date, name, money, type });
     setIsAdd(false);
   };
 
   return (
-    <section className="add-wrapper">
-      <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
-      <div className="add-list">
-        <div className="type-wrapper">
-          <Button
-            className={`expenses-btn${type === "expenses" ? " type-on" : ""}`}
-            text="지출"
-            onClick={() => setType("expenses")}
+    <form onSubmit={handleSubmit}>
+      <div className="add-backdrop" onClick={() => setIsAdd(false)}></div>
+      <div className="add-wrapper">
+        <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
+        <div className="add-list">
+          <div className="type-wrapper">
+            <Button
+              className={`expenses-btn${type === "EXPENSES" ? " type-on" : ""}`}
+              text="지출"
+              onClick={() => setType("EXPENSES")}
+            />
+            <Button
+              className={`income-btn${type === "INCOMES" ? " type-on" : ""}`}
+              text="수입"
+              onClick={() => setType("INCOMES")}
+            />
+          </div>
+          <Input
+            input={{
+              type: "date",
+              id: "date",
+              value: dateFormat(date),
+              event: (e) => setDate(e.target.value),
+            }}
+            labelText="날짜"
           />
-          <Button
-            className={`income-btn${type === "income" ? " type-on" : ""}`}
-            text="수입"
-            onClick={() => setType("income")}
+          <Input
+            input={{
+              ref: useName,
+              type: "name",
+              id: "name",
+              value: name,
+              event: (e) => setName(e.target.value),
+            }}
+            labelText="설명"
+          />
+          <Input
+            input={{
+              ref: useMoney,
+              type: "number",
+              id: "money",
+              value: money || "",
+              event: (e) => setMoney(e.target.value),
+              placeholder: "숫자만 입력하세요",
+            }}
+            labelText="금액"
           />
         </div>
-        <label htmlFor="date">날짜</label>
-        <input
-          type="date"
-          id="date"
-          name="date"
-          value={dateFormat(date)}
-          onChange={(e) => setDate(new Date(e.target.value))}
-        />
-        <label htmlFor="name">설명</label>
-        <input
-          ref={useName}
-          id="name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label htmlFor="money">금액</label>
-        <input
-          ref={useMoney}
-          id="money"
-          name="money"
-          value={money || ""}
-          onChange={(e) => {
-            setMoney(parseInt(e.target.value));
-          }}
-          onKeyDown={(e) => e.keyCode === 13 && handleSubmit()}
-          placeholder="숫자만 입력하세요"
-        />
+        <div className="add-btn">
+          <Button
+            className={"cancle-btn"}
+            text="취소"
+            onClick={() => setIsAdd(false)}
+          />
+          <Button
+            className={"submit-btn"}
+            text="등록"
+            type="active"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
-      <div className="add-btn">
-        <Button
-          className={"cancle-btn"}
-          text="취소"
-          onClick={() => setIsAdd(false)}
-        />
-        <Button
-          className={"submit-btn"}
-          text="등록"
-          type="active"
-          onClick={() => handleSubmit()}
-        />
-      </div>
-    </section>
+    </form>
   );
 };
 

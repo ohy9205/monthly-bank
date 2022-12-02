@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import ItemContext from "../store/item-context";
 
-const DayItem = ({ name, type, money, id, onClick }) => {
+const DayItem = ({ name, type, money, id, onEdit }) => {
   let moneyFormat = parseInt(money).toLocaleString();
   let itemCtx = useContext(ItemContext);
 
@@ -18,10 +18,10 @@ const DayItem = ({ name, type, money, id, onClick }) => {
       onClick={(e) => {
         let targetName = e.target.tagName;
         (targetName === "DL" || targetName === "DT" || targetName === "DD") &&
-          onClick(id);
+          onEdit(id);
       }}>
       <dt>{name}</dt>
-      <dd>{type === "INCOMES" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
+      <dd>{type === "INCOME" ? `+${moneyFormat}` : `-${moneyFormat}`}</dd>
       <button>
         <FontAwesomeIcon
           className="del-btn"

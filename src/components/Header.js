@@ -5,8 +5,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import ItemContext from "../store/item-context";
+import Button from "../UI/Button";
 
-const Header = ({ text }) => {
+const Header = () => {
   const itemCtx = useContext(ItemContext);
   const account = itemCtx.account;
   const curDate = itemCtx.curDate;
@@ -14,7 +15,7 @@ const Header = ({ text }) => {
   // const { account } = useContext(DataContext);
   const total = parseInt(account.total).toLocaleString();
   const income = parseInt(account.income).toLocaleString();
-  const expenses = parseInt(account.expenses).toLocaleString();
+  const spending = parseInt(account.spending).toLocaleString();
 
   /** header에 전달할 년-월 정보 */
   const headText = `${curDate.getFullYear()}-${
@@ -35,7 +36,7 @@ const Header = ({ text }) => {
 
   return (
     <header className="main-header">
-      <button className="left-btn">
+      <button type="button" className={"left-btn"}>
         <FontAwesomeIcon icon={faChevronLeft} onClick={prevMonthHandler} />
       </button>
       <div className="left-col">
@@ -49,10 +50,10 @@ const Header = ({ text }) => {
         </div>
         <div className="total-money">
           <h2>지출</h2>
-          <p>{expenses}</p>
+          <p>{spending}</p>
         </div>
       </div>
-      <button className="right-btn">
+      <button type="button" className={"right-btn"}>
         <FontAwesomeIcon icon={faChevronRight} onClick={nextMonthHandler} />
       </button>
     </header>

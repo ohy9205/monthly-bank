@@ -1,6 +1,6 @@
 import DayItem from "./DayItem";
 import ControlMenu from "./ControlMenu";
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Add from "./Add";
@@ -13,6 +13,11 @@ const List = () => {
   const [isAdd, setIsAdd] = useState(false);
   const [targetId, setTargetId] = useState();
 
+  /** 내역 내림차순으로 정렬 */
+  const compare = (a, b) => {
+    return b.date - a.date;
+  };
+
   /** filtering 동작 */
   useEffect(() => {
     let filterData = [];
@@ -24,61 +29,61 @@ const List = () => {
     setSortedData(filterData);
   }, [monthData, filter]);
 
-  /** 내역 내림차순으로 정렬 */
-  const compare = (a, b) => {
-    return b.date - a.date;
+  /**필터링 핸들러 */
+  const onFilteringHandler = (filter) => {
+    setFilter(filter);
+    // console.log(filter);
   };
 
-  /** 내역 일자 headText 전달 유무를 따지기 위한 변수 */
-  let prevDate = 0;
-
-  /** 내역 클릭하면 수행되는 동작 */
-  const onClickEdit = (id) => {
+  /** 내역 클릭하면 edit 창이 열린다 */
+  const onEditHandler = (id) => {
     setTargetId(id);
     setIsAdd(true);
   };
 
-  /** add창을 닫으면 target을 초기화한다 */
+  /** add/edit창을 닫는다 */
+  const onCloseHandler = () => {
+    setIsAdd(false);
+  };
+
+  /** add/edit창을 닫으면 target을 초기화한다 */
   useEffect(() => {
-    isAdd || setTargetId();
+    isAdd || setTargetId(null);
   }, [isAdd]);
 
-  return (
-    <main>
-      <section className="list-wrapper">
-        <header>
-          {/* filtering */}
-          <h1>월간 내역</h1>
-          {/* 총, 지출, 수입 선택시 동작할 함수 생성하고 props로 전달 */}
-          <ControlMenu onClick={setFilter} />
-        </header>
-        <article>
-          {sortedData &&
-            sortedData.map((it) => {
-              let date = new Date(parseInt(it.date)); // 내역날짜
-              const headText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
-              let isExit = parseInt(date.getDate()) === prevDate;
-              prevDate = parseInt(date.getDate());
+  /** 내역 렌더링 */
+  const itemRendering = () => {
+    if (!sortedData) return;
 
-              if (isExit) {
-                return <DayItem key={it.id} onClick={onClickEdit} {...it} />;
-              } else {
-                return (
-                  <React.Fragment key={it.id}>
-                    <h1>{headText}</h1>
-                    <DayItem
-                      key={it.id}
-                      headText={headText}
-                      onClick={onClickEdit}
-                      {...it}
-                    />
-                  </React.Fragment>
-                );
-              }
-            })}
-        </article>
+    let prevDate = 0;
+    let isExist = false;
+    const result = sortedData.map((it) => {
+      const date = new Date(parseInt(it.date)); // 내역날짜
+      const dateText = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
+      isExist = prevDate === date.getDate();
+      prevDate = date.getDate();
+
+      return (
+        <Fragment key={it.id}>
+          {!isExist && <h1>{dateText}</h1>}
+          <DayItem key={it.id} onEdit={onEditHandler} {...it} />
+        </Fragment>
+      );
+    });
+    return result;
+  };
+
+  return (
+    <main className="list-wrapper">
+      <header>
+        <h1>월간 내역</h1>
+        <ControlMenu onFilter={onFilteringHandler} />
+      </header>
+      <section>
+        <article>{itemRendering()}</article>
       </section>
-      <aside>
+      <footer>
         <button>
           <FontAwesomeIcon
             className="add-btn"
@@ -89,8 +94,8 @@ const List = () => {
             }}
           />
         </button>
-      </aside>
-      {isAdd && <Add setIsAdd={setIsAdd} targetId={targetId} />}
+      </footer>
+      {isAdd && <Add onClose={onCloseHandler} targetId={targetId} />}
     </main>
   );
 };

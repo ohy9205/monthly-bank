@@ -12,14 +12,14 @@ const dateFormat = (msdate) => {
   return `${year}-${month}-${day}`;
 };
 
-const Add = ({ setIsAdd, targetId }) => {
+const Add = ({ onClose, targetId }) => {
   const { addItem, editItem } = useContext(ItemContext);
   const { monthData } = useContext(ItemContext);
 
   const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
   const [money, setMoney] = useState();
-  const [type, setType] = useState("EXPENSES");
+  const [type, setType] = useState("SPENDING");
 
   const useName = useRef();
   const useMoney = useRef();
@@ -29,7 +29,7 @@ const Add = ({ setIsAdd, targetId }) => {
     if (!targetId) {
       setDate(new Date());
       setMoney(0);
-      setType("EXPENSES");
+      setType("SPENDING");
       setName("");
       return;
     }
@@ -46,8 +46,18 @@ const Add = ({ setIsAdd, targetId }) => {
   };
 
   /**분류 선택 */
-  const selectTypeHandler = (type) => {
-    setType(type);
+  const selectTypeHandler = (e) => {
+    setType(e.target.dataset.type);
+  };
+
+  /**이름 입력 */
+  const enteredName = (e) => {
+    setName(e.target.value);
+  };
+
+  /**금액 입력 */
+  const enteredMoney = (e) => {
+    setMoney(e.target.value);
   };
 
   /** submit 버튼 클릭시 데이터 저장 */
@@ -64,33 +74,37 @@ const Add = ({ setIsAdd, targetId }) => {
     targetId
       ? editItem(targetId, { date, name, money, type })
       : addItem({ date, name, money, type });
-    setIsAdd(false);
+    onClose();
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="add-backdrop" onClick={() => setIsAdd(false)}></div>
+      <div className="add-backdrop" onClick={onClose}></div>
       <div className="add-wrapper">
         <h1>{targetId ? `내역 수정` : `내역 추가`}</h1>
         <div className="add-list">
           <div className="type-wrapper">
             <Button
-              className={`expenses-btn${type === "EXPENSES" ? " type-on" : ""}`}
-              text="지출"
-              onClick={() => setType("EXPENSES")}
-            />
+              type="button"
+              dataset="SPENDING"
+              className={`spending-btn ${type === "SPENDING" ? "type-on" : ""}`}
+              onClick={selectTypeHandler}>
+              지출
+            </Button>
             <Button
-              className={`income-btn${type === "INCOMES" ? " type-on" : ""}`}
-              text="수입"
-              onClick={() => setType("INCOMES")}
-            />
+              type="button"
+              dataset="INCOME"
+              className={`income-btn ${type === "INCOME" ? "type-on" : ""}`}
+              onClick={selectTypeHandler}>
+              수입
+            </Button>
           </div>
           <Input
             input={{
               type: "date",
               id: "date",
               value: dateFormat(date),
-              event: (e) => setDate(e.target.value),
+              event: selectDateHandler,
             }}
             labelText="날짜"
           />
@@ -100,7 +114,7 @@ const Add = ({ setIsAdd, targetId }) => {
               type: "name",
               id: "name",
               value: name,
-              event: (e) => setName(e.target.value),
+              event: enteredName,
             }}
             labelText="설명"
           />
@@ -110,24 +124,19 @@ const Add = ({ setIsAdd, targetId }) => {
               type: "number",
               id: "money",
               value: money || "",
-              event: (e) => setMoney(e.target.value),
+              event: enteredMoney,
               placeholder: "숫자만 입력하세요",
             }}
             labelText="금액"
           />
         </div>
         <div className="add-btn">
-          <Button
-            className={"cancle-btn"}
-            text="취소"
-            onClick={() => setIsAdd(false)}
-          />
-          <Button
-            className={"submit-btn"}
-            text="등록"
-            type="active"
-            onClick={handleSubmit}
-          />
+          <Button className={"cancle-btn"} onClick={onClose}>
+            취소
+          </Button>
+          <Button className={"submit-btn"} active="on" onClick={handleSubmit}>
+            등록
+          </Button>
         </div>
       </div>
     </form>

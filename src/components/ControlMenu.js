@@ -1,26 +1,34 @@
-const ControlMenu = ({ onClick }) => {
+const ControlMenu = ({ onFilter }) => {
   /** 필터 클릭시 동작 함수 */
-  const clickToggle = (e, type) => {
+  const onClickHandler = (e) => {
     let btn = document.querySelectorAll(".filter");
     for (let it of btn) {
       it.classList.remove("filter-on");
     }
     e.target.classList.add("filter-on");
 
-    onClick(type);
+    console.log(e.target.dataset.type);
+    onFilter(e.target.dataset.type);
   };
 
   return (
     <div className="filter-wrapper">
       <button
         className={`filter filter-on`}
-        onClick={(e) => clickToggle(e, "ALL")}>
+        data-type={"ALL"}
+        onClick={onClickHandler}>
         총
       </button>
-      <button className={`filter`} onClick={(e) => clickToggle(e, "INCOMES")}>
+      <button
+        className={`filter`}
+        data-type={"INCOMES"}
+        onClick={onClickHandler}>
         수입
       </button>
-      <button className={`filter`} onClick={(e) => clickToggle(e, "EXPENSES")}>
+      <button
+        className={`filter`}
+        data-type={"EXPENSES"}
+        onClick={onClickHandler}>
         지출
       </button>
     </div>

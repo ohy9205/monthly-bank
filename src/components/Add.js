@@ -86,7 +86,7 @@ const Add = ({ onClose, targetId }) => {
           <div className="type-wrapper">
             <Button
               type="button"
-              dataset="EXPENSE"
+              dataset="EXPENSES"
               className={`expenses-btn ${type === "EXPENSES" ? "type-on" : ""}`}
               onClick={selectTypeHandler}>
               지출

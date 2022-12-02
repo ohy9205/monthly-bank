@@ -131,7 +131,7 @@ const Add = ({ onClose, targetId }) => {
           />
         </div>
         <div className="add-btn">
-          <Button className={"cancle-btn"} onClick={onClose}>
+          <Button type="button" className={"cancle-btn"} onClick={onClose}>
             취소
           </Button>
           <Button className={"submit-btn"} active="on" onClick={handleSubmit}>

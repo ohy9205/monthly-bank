@@ -7,7 +7,6 @@ const ItemContext = React.createContext({
   editItem: (item) => {},
   removeItem: (id) => {},
   initItem: (items) => {},
-  // filteredList: (id) => {},
   curDate: new Date(),
 });
 export default ItemContext;

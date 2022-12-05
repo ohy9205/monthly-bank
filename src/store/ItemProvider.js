@@ -36,7 +36,7 @@ const ItemProvider = ({ children }) => {
   const [monthData, setMonthData] = useState([]);
   const [account, setAccount] = useState({});
   const [curDate, setCurDate] = useState(new Date());
-  const itemId = useRef(0); // 외부(List컴포)에서 받으면 달마다 id가 중복될 가능성이 있음
+  const itemId = useRef(0);
 
   /** 최초 렌더링 시 localStage에 저장된 일기를 꺼내온다 */
   useEffect(() => {
@@ -71,7 +71,6 @@ const ItemProvider = ({ children }) => {
       })
     );
   }, [curDate, list]);
-  // 수정 시에는 list무조건 재렌더링됨, 근데 리스트 내용 변경 없을수도있을대를 위해서 list에 useMemo처리해야함
 
   /** 월 돈 정보 업데이트 */
   const updateAccount = useCallback(() => {
@@ -93,7 +92,6 @@ const ItemProvider = ({ children }) => {
 
   /** 내역 수정이나 월 변경 시 account, monthData state 업데이트 */
   useEffect(() => {
-    // list가 빈값이 아니면 account 상태 업데이트
     if (list.length < 0) return;
     updateMonthData();
   }, [list, curDate, updateMonthData]);
@@ -124,7 +122,6 @@ const ItemProvider = ({ children }) => {
 
   /** 내역 수정 동작 */
   const editItem = (targetId, item) => {
-    //newData: 날짜, 내역, 금액, 분류
     const newData = {
       id: targetId,
       ...item,
@@ -151,7 +148,6 @@ const ItemProvider = ({ children }) => {
     editItem,
     removeItem,
     initItem,
-    // filteredList,
     curDate,
   };
 

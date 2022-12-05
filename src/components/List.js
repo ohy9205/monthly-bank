@@ -32,7 +32,6 @@ const List = () => {
   /**필터링 핸들러 */
   const onFilteringHandler = (filter) => {
     setFilter(filter);
-    // console.log(filter);
   };
 
   /** 내역 클릭하면 edit 창이 열린다 */

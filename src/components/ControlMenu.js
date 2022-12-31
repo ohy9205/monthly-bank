@@ -7,7 +7,6 @@ const ControlMenu = ({ onFilter }) => {
     }
     e.target.classList.add("filter-on");
 
-    console.log(e.target.dataset.type);
     onFilter(e.target.dataset.type);
   };
 

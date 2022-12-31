@@ -5,14 +5,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import ItemContext from "../store/item-context";
-import Button from "../UI/Button";
 
 const Header = () => {
   const itemCtx = useContext(ItemContext);
   const account = itemCtx.account;
   const curDate = itemCtx.curDate;
 
-  // const { account } = useContext(DataContext);
   const total = parseInt(account.total).toLocaleString();
   const income = parseInt(account.income).toLocaleString();
   const spending = parseInt(account.spending).toLocaleString();

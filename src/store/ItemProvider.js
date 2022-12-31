@@ -147,7 +147,6 @@ const ItemProvider = ({ children }) => {
     addItem,
     editItem,
     removeItem,
-    initItem,
     curDate,
   };
 

@@ -2,15 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import ItemContext from "../store/item-context";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
-
-/** 날짜 포맷 변환 */
-const dateFormat = (msdate) => {
-  const date = new Date(msdate);
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-  return `${year}-${month}-${day}`;
-};
+import { dateFormat } from "../util/dateFormat";
 
 const Add = ({ onClose, targetId }) => {
   const { addItem, editItem } = useContext(ItemContext);

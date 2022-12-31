@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/github.io/monthly-bank/static/css/main.592e2d7d.css",
-    "main.js": "/github.io/monthly-bank/static/js/main.bc8a87de.js",
-    "index.html": "/github.io/monthly-bank/index.html",
-    "main.592e2d7d.css.map": "/github.io/monthly-bank/static/css/main.592e2d7d.css.map",
-    "main.bc8a87de.js.map": "/github.io/monthly-bank/static/js/main.bc8a87de.js.map"
+    "main.css": "/monthly-bank/static/css/main.592e2d7d.css",
+    "main.js": "/monthly-bank/static/js/main.bc8a87de.js",
+    "index.html": "/monthly-bank/index.html",
+    "main.592e2d7d.css.map": "/monthly-bank/static/css/main.592e2d7d.css.map",
+    "main.bc8a87de.js.map": "/monthly-bank/static/js/main.bc8a87de.js.map"
   },
   "entrypoints": [
     "static/css/main.592e2d7d.css",

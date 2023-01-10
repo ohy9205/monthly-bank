@@ -20,13 +20,13 @@ const ControlMenu = ({ onFilter }) => {
       </button>
       <button
         className={`filter`}
-        data-type={"INCOMES"}
+        data-type={"INCOME"}
         onClick={onClickHandler}>
         수입
       </button>
       <button
         className={`filter`}
-        data-type={"EXPENSES"}
+        data-type={"SPENDING"}
         onClick={onClickHandler}>
         지출
       </button>

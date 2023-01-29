@@ -1,10 +1,12 @@
 # :money_with_wings: 월간 가계부 프로젝트
-월별로 지출, 수입 내역을 기록할 수 있는 가계부 애플리케이션입니다.   
+
+월별로 지출, 수입 내역을 기록할 수 있는 가계부 애플리케이션입니다.  
 Rect기초 공부 후 실습삼아 만든 미니 프로젝트입니다.
 
 > https://ohy9205.github.io/monthly-bank/
 
 ## 기능
+
 - [x] 월단위로 내역을 조회
 - [x] 월단위로 전체 자산내역 조회
 - [x] 조회할 월을 변경
@@ -14,6 +16,7 @@ Rect기초 공부 후 실습삼아 만든 미니 프로젝트입니다.
 - [x] 모달창 on/off
 
 ## 사용
+
 ```js
 npm install
 
@@ -21,6 +24,7 @@ npm run start
 ```
 
 ## 프로젝트 구조
+
 ```
 📦src
  ┣ 📂components
@@ -39,7 +43,8 @@ npm run start
  ┣ 📜App.js
  ┣ 📜index.css
  ┗ 📜index.js
- ```
+```
+
 - components : 컴포넌트 모음
 - store : 애플리케이션 공통 데이터 모음
 - UI : 공통으로 쓰이는 UI요소 컴포넌트 모음
@@ -47,6 +52,7 @@ npm run start
 ## 내역 조회
 
 ![가계부2_gif.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a87a253a-83e9-4462-a822-dfb67ed79e31/%EA%B0%80%EA%B3%84%EB%B6%802_gif.gif)
+
 - `localstorage` 에 저장된 전체 내역 리스트 중 해당 월에 해당하는 데이터만 필터링해서 조회합니다.
 - 내역을 수입/지출별로 필터링해서 조회할 수 있습니다.
 - 필터 type값을 구분하기 위해 각 `button` 요소에 `data-set` 을 추가했습니다.
@@ -54,13 +60,6 @@ npm run start
 ## 내역 추가, 수정, 삭제
 
 ![가계부_gif.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b6b7a007-7555-4147-91c1-0a70989e5b05/%EA%B0%80%EA%B3%84%EB%B6%80_gif.gif)
+
 - 내역을 추가, 수정, 삭제하면 브라우저의 `localstorage` 에 업데이트됩니다.
 - 추가, 수정 작업은 동일한 `Add` 컴포넌트에서 이루어지되, props로 전달받은 `targetId`의 유무에 따라 서로 다른 작업을 수행합니다.
-
-
----
-처음 진행하는 리액트 프로젝트라 어려움도 많았지만 그만큼 리액트에 기초 개념에 대해 감을 잡을 수 있었습니다.   
-
-아직까지는 컴포넌트 분리 기준을 잡는것과 전역에서 관리할 데이터를 선택하는 것이 어려웠는데, 최대한 재사용성과 가독성을 높이기 위한 방향으로 분리하도록 노력했습니다.
-
-git 사용에 익숙하지 않아서 git으로 프로젝트를 관리하는 것을 또다른 목표로 잡았는데 브랜치를 나누고 add commit push merge 등의 명렁어를 사용해보면서 git의 기본개념도 학습할 수 있어 의미있었습니다.

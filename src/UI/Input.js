@@ -9,6 +9,7 @@ const Input = ({ input, labelText }) => {
         value={input.value}
         onChange={input.event}
         placeholder={input.placeholder && input.placeholder}
+        autoComplete="off"
       />
     </div>
   );
